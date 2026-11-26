@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dudo Solitario</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎲 Dudo Solitario</h1>
+    <button id="btn-rules" class="ghost">Reglas</button>
+  </header>
+
+  <main>
+    <!-- Pantalla de inicio -->
+    <section id="setup" class="screen">
+      <div class="card setup-card">
+        <h2>Nueva partida</h2>
+        <label>Tu nombre
+          <input id="in-name" maxlength="14" value="Tú">
+        </label>
+        <label>Rivales
+          <select id="in-bots">
+            <option value="1">1 bot</option>
+            <option value="2">2 bots</option>
+            <option value="3" selected>3 bots</option>
+            <option value="4">4 bots</option>
+            <option value="5">5 bots</option>
+          </select>
+        </label>
+        <label>Dificultad
+          <select id="in-diff">
+            <option value="easy">Fácil</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Difícil</option>
+          </select>
+        </label>
+        <button id="btn-start" class="primary big">Jugar</button>
+      </div>
+    </section>
+
+    <!-- Mesa de juego -->
+    <section id="game" class="screen hidden">
+      <div id="opponents" class="opponents"></div>
+
+      <div class="table">
+        <div id="bid-display" class="bid-display"></div>
+        <div id="status" class="status"></div>
+        <button id="btn-next" class="primary hidden">Siguiente ronda</button>
+      </div>
+
+      <div class="me">
+        <div class="me-head">
+          <span id="me-name"></span>
+          <span id="me-count" class="muted"></span>
+        </div>
+        <div id="my-dice" class="dice-row"></div>
+
+        <div id="controls" class="controls">
+          <div class="bid-picker">
+            <div class="qty">
+              <button id="q-minus" aria-label="Menos">−</button>
+              <span id="q-val">1</span>
+              <button id="q-plus" aria-label="Más">+</button>
+            </div>
+            <span class="times">×</span>
+            <div id="face-picker" class="face-picker"></div>
+          </div>
+          <div class="actions">
+            <button id="btn-bid" class="primary">Apostar</button>
+            <button id="btn-dudo" class="danger">¡Dudo!</button>
+            <button id="btn-calzo" class="warn">Calzo</button>
+          </div>
+          <div id="hint" class="hint"></div>
+        </div>
+      </div>
+
+      <details class="log-wrap">
+        <summary>Historial</summary>
+        <ol id="log"></ol>
+      </details>
+    </section>
+  </main>
+
+  <dialog id="rules-dialog">
+    <h2>Cómo se juega</h2>
+    <ul>
+      <li>Cada jugador parte con <b>5 dados</b> y los lanza en secreto. Solo ves los tuyos.</li>
+      <li>Por turnos se apuesta cuántos dados de una pinta hay <b>en toda la mesa</b>, por ejemplo «4 quinas».</li>
+      <li>Los <b>ases (1) son comodines</b> y cuentan para cualquier pinta.</li>
+      <li>Para subir la apuesta hay que decir más dados, o la misma cantidad con una pinta más alta.</li>
+      <li>Para pasar a ases basta con la <b>mitad</b> (redondeada hacia arriba). Para salir de ases se necesita el <b>doble + 1</b>. No se puede abrir la ronda con ases.</li>
+      <li><b>¡Dudo!</b>: si en la mesa hay menos dados de los apostados, pierde un dado quien apostó. Si no, pierde un dado quien dudó.</li>
+      <li><b>Calzo</b>: apuestas a que la cantidad es <b>exacta</b>. Si aciertas, recuperas un dado (máx. 5). Si fallas, pierdes uno.</li>
+      <li>Quien pierde un dado abre la siguiente ronda. Quien se queda sin dados queda eliminado. Gana el último que quede en pie.</li>
+    </ul>
+    <p class="muted">Nombres: 1 as · 2 tonto · 3 tren · 4 cuadra · 5 quina · 6 sexto</p>
+    <form method="dialog"><button class="primary">Entendido</button></form>
+  </dialog>
+
+  <dialog id="over-dialog">
+    <h2 id="over-title"></h2>
+    <p id="over-text"></p>
+    <form method="dialog"><button id="btn-again" class="primary">Jugar otra vez</button></form>
+  </dialog>
+
+  <script src="game.js"></script>
+</body>
+</html>
